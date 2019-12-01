@@ -61,16 +61,16 @@ def combine_html(present_args):
         html_doc.write(str(soup.table))
 
     if present_args['benchmark']:
-        html_doc.write("<br/><br/><h3>Checklist Info</h3>")
+        html_doc.write("<br/><br/><h3>Benchmark Report</h3>")
         soup = BeautifulSoup(open(html_files['benchmark'], 'r'), 'html.parser')
         html_doc.write(str(soup.table))
 
     if present_args['prowler']:
-        html_doc.write("<br/><br/><h3>Prowler Info</h3>")
+        html_doc.write("<br/><br/><h3>Prowler Report</h3>")
         soup = BeautifulSoup(open(html_files['prowler'], 'r'), 'html.parser')
         html_doc.write(str(soup.table))
 
-    if ((not present_args['prowler']) and (not present_args['checklist']) and (not present_args['pmapper'])):
+    if ((not present_args['prowler']) and (not present_args['benchmark']) and (not present_args['pmapper'])):
         html_doc.write("<h3>No Report Available</h3>")
 
     html_doc.write("</body></html>")
@@ -142,6 +142,7 @@ if (present_args['prowler']):
     failed_items = []
 
     with open('prowler.json', 'r', encoding='utf-8') as f:
+        # Removes non-json lines of output file
         data = f.readlines()[8:]
         for item in data:
             json_item = json.loads(item)

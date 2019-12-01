@@ -2,7 +2,6 @@ FROM python
 
 ADD main.py /
 ADD aws-cis-foundation-benchmark-checklist.py /
-COPY prowler/ /prowler/
 
 RUN pip install AWSScout2
 RUN pip3 install principalmapper
@@ -14,8 +13,6 @@ RUN pip install flask
 RUN pip install awscli
 RUN pip install detect-secrets
 
-EXPOSE 5000
-
 RUN apt-get update
 RUN apt-get install -y groff
 RUN apt-get install -y jq
@@ -25,5 +22,7 @@ RUN cd /ScoutSuite && python setup.py install
 
 RUN git clone https://github.com/RhinoSecurityLabs/pacu.git
 RUN cd /pacu && bash install.sh
+
+RUN git clone https://github.com/toniblyx/prowler.git
 
 ENTRYPOINT ["python", "./main.py"]
